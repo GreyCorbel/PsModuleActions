@@ -35,11 +35,12 @@ Function Update-Manifest
 
 if([string]::IsNullOrWhiteSpace($moduleName))
 {
-    Write-Error 'Module name must be provided'
-    return
+    throw 'Module name must be provided'
 }
 
 $moduleFile = [Path]::Combine($rootPath,'Module',$moduleName,"$moduleName`.psm1")
+$publicCommands = new-object System.Collections.Generic.List[string]
+
 #clear the file
 if(Test-Path -Path $moduleFile)
 {
@@ -52,7 +53,6 @@ if(Test-Path ([Path]::Combine($rootPath,'Commands','ModuleStart.ps1')))
 }
 
 '#region Public commands' | Out-File -FilePath $moduleFile -Append
-$publicCommands = new-object System.Collections.Generic.List[string]
 foreach($file in Get-ChildItem -Path ([Path]::Combine($rootPath,'Commands','Public')) -Filter *.ps1)
 {
     Get-Content $file.FullName | Out-File -FilePath $moduleFile -Append
