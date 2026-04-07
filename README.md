@@ -13,7 +13,7 @@ Compiles a PowerShell module by concatenating individual command files into a si
 | Input | Required | Default | Description |
 |-------|----------|---------|-------------|
 | `module-name` | Yes | — | Name of the module to build |
-| `root-path` | No | `${{ github.workspace }}` | Root folder of the repository |
+| `root-path` | No | `${{ github.workspace }}` | Root folder of the repository that uses this action |
 
 #### Usage
 
