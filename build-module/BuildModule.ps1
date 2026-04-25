@@ -53,17 +53,25 @@ if(Test-Path ([Path]::Combine($rootPath,'Commands','ModuleStart.ps1')))
 }
 
 '#region Public commands' | Out-File -FilePath $moduleFile -Append
-foreach($file in Get-ChildItem -Path ([Path]::Combine($rootPath,'Commands','Public')) -Filter *.ps1)
+$sectionPath = [Path]::Combine($rootPath,'Commands','Public')
+if((Test-Path -Path $sectionPath))
 {
-    Get-Content $file.FullName | Out-File -FilePath $moduleFile -Append
-    [void]$publicCommands.Add($file.BaseName)
+    foreach($file in Get-ChildItem -Path $sectionPath -Filter *.ps1)
+    {
+        Get-Content $file.FullName | Out-File -FilePath $moduleFile -Append
+        [void]$publicCommands.Add($file.BaseName)
+    }
 }
 '#endregion Public commands' | Out-File -FilePath $moduleFile -Append
 
 '#region Internal commands' | Out-File -FilePath $moduleFile -Append
-foreach($file in Get-ChildItem -Path([Path]::Combine($rootPath,'Commands','Internal')) -Filter *.ps1)
+$sectionPath = [Path]::Combine($rootPath,'Commands','Internal')
+if((Test-Path -Path $sectionPath))
 {
-    Get-Content $file.FullName | Out-File -FilePath $moduleFile -Append
+    foreach($file in Get-ChildItem -Path $sectionPath -Filter *.ps1)
+    {
+        Get-Content $file.FullName | Out-File -FilePath $moduleFile -Append
+    }
 }
 '#endregion Internal commands' | Out-File -FilePath $moduleFile -Append
 
